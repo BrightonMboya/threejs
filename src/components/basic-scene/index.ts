@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
 
 const scene = new THREE.Scene();
 // creating the mesh cube
@@ -44,11 +45,24 @@ renderer.setSize(sizes.width, sizes.height);
 // renderer.render(scene, camera);
 document.body.appendChild(renderer.domElement);
 
+
+const clock = new THREE.Clock();
+
+//using gsap to do the animations
+gsap.to(cube.position, { duration: 1, delay: 1, x: 2 });
+gsap.to(cube.position, { duration: 1, delay: 2, x: 0 });
+
 function rotateCube() {
+    //fixing the fps on diff computers
+    const elapsedTime = clock.getElapsedTime();
+
     requestAnimationFrame(rotateCube);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    cube.rotation.z += 0.01;
+    // cube.rotation.y = elapsedTime;
+    // cube.rotation.x = elapsedTime
+    // cube.position.y = Math.sin(elapsedTime);
+    // cube.position.x = Math.cos(elapsedTime);
+
+
     renderer.render(scene, camera);
 }
 

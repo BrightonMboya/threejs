@@ -3,10 +3,12 @@ lockfileVersion: 5.4
 specifiers:
   '@types/three': ^0.149.0
   astro: ^2.0.17
+  gsap: 3.5.1
   three: ^0.150.1
 
 dependencies:
   astro: 2.0.17
+  gsap: 3.5.1
   three: 0.150.1
 
 devDependencies:
@@ -1307,6 +1309,10 @@ packages:
       kind-of: 6.0.3
       section-matter: 1.0.0
       strip-bom-string: 1.0.0
+    dev: false
+
+  /gsap/3.5.1:
+    resolution: {integrity: sha512-EMV0RSUKZNeTUzLKAizGlwxVOUyif3/g8I3S1aA/hf3gbqwBvmQ02x1RdTBQNQMOpHCVBv9y/vaHwfctoAg8zw==}
     dev: false
 
   /has-flag/3.0.0:
