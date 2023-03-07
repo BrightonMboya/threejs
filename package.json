@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "astro": "^2.0.17",
+    "dat.gui": "^0.7.9",
     "gsap": "3.5.1",
     "three": "^0.150.1"
   },
   "devDependencies": {
+    "@types/dat.gui": "^0.7.7",
     "@types/three": "^0.149.0"
   }
 }
