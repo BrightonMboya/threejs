@@ -14,14 +14,35 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const loadingManager = new THREE.LoadingManager();
 const textureLoader = new THREE.TextureLoader(loadingManager);
-const colorTexture = textureLoader.load('/wall.jpg');
+const wallTexture = textureLoader.load('/wall.jpg');
 const woodTexture = textureLoader.load('https://images.unsplash.com/photo-1597113366853-fea190b6cd82?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
 
 
 const scene = new THREE.Scene();
 // creating the mesh cube
-const material = new THREE.MeshBasicMaterial({ map: woodTexture });
+
+// const geometry = new THREE.BufferGeometry().setFromPoints(points);
 const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ map: wallTexture });
+
+//fixing the textures
+wallTexture.repeat.x = 2;
+wallTexture.repeat.y = 2;
+wallTexture.wrapS = THREE.RepeatWrapping;
+wallTexture.wrapT = THREE.RepeatWrapping;
+
+/* offset, how far should the texture start from the x or y */
+wallTexture.offset.x = 0.5;
+wallTexture.offset.y = 0.5;
+
+/* you can also rotate the texture */
+wallTexture.rotation = Math.PI * 0.25;
+
+/* rotating the texture at the center   */
+wallTexture.center.x = 0.5;
+wallTexture.center.y = 0.5;
+
+/* You can also tweak the texture with mipMap, check the docs */
 
 
 const cube = new THREE.Mesh(geometry, material);
