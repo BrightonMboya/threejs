@@ -16,6 +16,7 @@ const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
 const loadingManager = new THREE.LoadingManager();
 
 const textureLoader = new THREE.TextureLoader(loadingManager);
+const matcapTexture = textureLoader.load("/textures/matcaps/1.png");
 
 
 /* Loading fonts */
@@ -35,8 +36,9 @@ fontLoader.load('/helvetiker_bold.typeface.json', (font) => {
             bevelSegments: 3
         }
     );
-    const textMaterial = new THREE.MeshBasicMaterial();
-    textMaterial.wireframe = true
+    const textMaterial = new THREE.MeshMatcapMaterial({
+        map: matcapTexture
+    });
     const text = new THREE.Mesh(textGeometry, textMaterial);
 
     // textGeometry.translate(
@@ -48,12 +50,37 @@ fontLoader.load('/helvetiker_bold.typeface.json', (font) => {
     textGeometry.computeBoundingBox();
     console.log(textGeometry.boundingBox)
     scene.add(text);
+
+    /* adding objects to the scene */
+    const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+    const donutMaterial = new THREE.MeshMatcapMaterial({ map: matcapTexture });
+    for (let i = 0; i < 100; i++) {
+        const donut = new THREE.Mesh(donutGeometry, donutMaterial);
+        donut.position.x = (Math.random() - 0.5) * 10;
+        donut.position.y = (Math.random() - 0.5) * 10;
+        donut.position.z = (Math.random() - 0.5) * 10;
+        donut.rotation.x = Math.random() * Math.PI;
+        donut.rotation.y = Math.random() * Math.PI;
+
+        function rotateDonut() {
+            window.requestAnimationFrame(rotateDonut);
+            donut.rotation.x += 0.001;
+            donut.rotation.y += 0.001;
+        }
+        rotateDonut();
+
+        scene.add(donut);
+    }
 })
 
 
-/* axes helpers */
-const axesHelper = new THREE.AxesHelper();
-scene.add(axesHelper);
+/* adding lights */
+// const PointLight = new THREE.PointLight(0xffffff);
+// PointLight.position.set(2, 3, 4);
+// scene.add(PointLight);
+const perspectiveLight = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+perspectiveLight.position.set(2, 3, 4);
+scene.add(perspectiveLight);
 
 //sizes
 const sizes = {
@@ -71,7 +98,7 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(sizes.width, sizes.height);
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     // renderer.render(scene, camera);
 
 })
@@ -84,7 +111,7 @@ controls.enableDamping = true;
 
 //u can also use orthographic camera
 // const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
-camera.position.z = 3;
+camera.position.z = 5
 
 scene.add(camera)
 
