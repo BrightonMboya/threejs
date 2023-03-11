@@ -54,24 +54,24 @@ const geometry = new THREE.BoxGeometry(1, 1, 1);
 // material.shininess = 1000;
 // material.specular = new THREE.Color(0xff00ff);
 
-// const material = new THREE.MeshStandardMaterial();
-// // material.metalness = 0.45;
-// // material.roughness = 0.65;
-// material.map = doorColorTexture;
-// material.aoMap = doorAmbientOcclusionTexture
-// material.displacementMap = doorHeightTexture;
-// material.displacementScale = 0.05
-// material.metalnessMap = doorMetalnessTexture;
-// material.roughnessMap = doorRoughnessTexture;
-// material.normalMap = doorNormalTexture;
-// material.normalScale.set(0.5, 0.5);
-// material.transparent = true;
-// material.alphaMap = doorAlphaTexture;
-
 const material = new THREE.MeshStandardMaterial();
-material.metalness = 0.7;
-material.roughness = 0.2;
-material.envMap = environmentMapTexture;
+// material.metalness = 0.45;
+// material.roughness = 0.65;
+material.map = doorColorTexture;
+material.aoMap = doorAmbientOcclusionTexture
+material.displacementMap = doorHeightTexture;
+material.displacementScale = 0.05
+material.metalnessMap = doorMetalnessTexture;
+material.roughnessMap = doorRoughnessTexture;
+material.normalMap = doorNormalTexture;
+material.normalScale.set(0.5, 0.5);
+material.transparent = true;
+material.alphaMap = doorAlphaTexture;
+
+// const material = new THREE.MeshStandardMaterial();
+// material.metalness = 0.7;
+// material.roughness = 0.2;
+// material.envMap = environmentMapTexture;
 
 
 material.side = THREE.DoubleSide;
@@ -102,7 +102,7 @@ torus.position.x = 2;
 
 const cube = new THREE.Mesh(geometry, material);
 // scene.add(cube);
-scene.add(sphere, plane, torus);
+scene.add(plane, sphere, torus);
 
 /* fucking light`s */
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -136,6 +136,30 @@ scene.add(camera)
 
 //making the camera to lookAt the cube
 camera.lookAt(cube.position);
+
+
+/* handling resizes events */
+window.addEventListener('resize', () => {
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+    camera.aspect = sizes.width / sizes.height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(sizes.width, sizes.height);
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // renderer.render(scene, camera);
+
+})
+
+/* handling fullscreen events */
+window.addEventListener('dblclick', () => {
+    if (!document.fullscreenElement) {
+        canvas?.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+
+});
 
 
 // now we create the renderer
